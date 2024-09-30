@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Category } from 'src/categories/entities/category.entity';
+import { Product } from 'src/products/entities/product.entity';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany, ManyToOne } from 'typeorm';
 
 @Entity()
 export class Image {
@@ -13,4 +15,11 @@ export class Image {
 
   @Column('text')
   imageId: string;
+
+  //Tal vez deberia ser string
+  @ManyToOne(() => Product, product => product.images)
+  product: Product;
+
+  @ManyToOne(() => Category, category => category.images)
+  category: Category;
 }

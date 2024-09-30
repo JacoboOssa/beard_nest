@@ -1,4 +1,4 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToMany } from 'typeorm';
 import { Category } from '../../categories/entities/category.entity';
 import { Image } from '../../images/entities/image.entity';
 
@@ -26,10 +26,9 @@ export class Product {
   status: boolean;
 
   @ManyToOne(() => Category)
-  @JoinColumn()
   category: Category;
 
-  @ManyToOne(() => Image)
-  @JoinColumn()
-  main_image: Image;
+  @OneToMany(() => Image, image => image.product)
+  images: Image[];
+
 }
