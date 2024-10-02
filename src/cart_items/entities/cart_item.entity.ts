@@ -4,8 +4,8 @@ import { Cart } from '../../carts/entities/cart.entity';
 
 @Entity()
 export class CartItem {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column('decimal')
   total: number;
