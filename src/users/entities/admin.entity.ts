@@ -1,7 +1,7 @@
-import { Entity } from 'typeorm';
+import { ChildEntity, Entity } from 'typeorm';
 import { User } from './user.entity';
 
-@Entity()
+@ChildEntity()
 export class Admin extends User {
   //  No tenemos propiedades por ahora
 }

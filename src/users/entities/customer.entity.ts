@@ -1,10 +1,10 @@
-import { Entity, Column, OneToMany, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, OneToMany, OneToOne, JoinColumn, ChildEntity } from 'typeorm';
 import { User } from './user.entity';
 import { Order } from '../../orders/entities/order.entity';
 import { Cart } from '../../carts/entities/cart.entity';
 import { Comment } from 'src/comments/entities/comment.entity';
 
-@Entity()
+@ChildEntity()
 export class Customer extends User {
     @Column('text')
     bilingAddress: string;
