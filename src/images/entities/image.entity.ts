@@ -19,7 +19,4 @@ export class Image {
   //Tal vez deberia ser string
   @ManyToOne(() => Product, product => product.images)
   product: Product;
-
-  @ManyToOne(() => Category, category => category.images)
-  category: Category;
 }
