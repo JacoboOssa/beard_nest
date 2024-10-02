@@ -1,26 +1,29 @@
-import { Image } from 'src/images/entities/image.entity';
 import { Product } from 'src/products/entities/product.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, BeforeInsert } from 'typeorm';
 
 @Entity()
 export class Category {
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
-    @Column('text')
+    @Column('text', {unique: true})
     name: string;
 
-    //La relacion deberia ir tambien con imagen (creo)
     @Column()
-    image: string;
+    url_image:string;
 
     @Column('text', { unique: true })
-        slug: string;
+    slug: string;
 
     @OneToMany(() => Product, product => product.category)
     products: Product[];
 
-    @OneToMany(() => Image, image => image.category)
-    images: Image[];
+    @BeforeInsert()
+    checkSlug(): void {
+        if (!this.slug){
+            this.slug = this.name;
+        }
+        this.slug = this.slug.toLowerCase().replace(/ /g, '-');
+    }
 
 }
