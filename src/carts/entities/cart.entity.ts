@@ -4,8 +4,8 @@ import { Customer } from '../../users/entities/customer.entity';
 
 @Entity()
 export class Cart {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @OneToMany(() => CartItem, cartItem => cartItem.cart)
   items: CartItem[];
