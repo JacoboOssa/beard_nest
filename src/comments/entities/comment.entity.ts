@@ -4,8 +4,8 @@ import { Product } from '../../products/entities/product.entity';
 
 @Entity()
 export class Comment {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column('text')
   content: string;
