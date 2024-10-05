@@ -67,7 +67,7 @@ export class ProductsService {
 
     private handleDBExceptions(error: any) {
         if(error.code === '23505') {
-          throw new BadRequestException('Blog already exists');
+          throw new BadRequestException('Product already exists');
         }
         throw new InternalServerErrorException(error.code);
       }
