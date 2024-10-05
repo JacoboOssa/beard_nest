@@ -19,8 +19,11 @@ export abstract class User {
     @Column('text', {select: false})
     password: string;
 
-    @Column('text', {array: true, default: ['user']})
+    @Column('text', {array: true})
     roles: string[];
+
+    @Column('text')
+    status: string;
 
     @BeforeInsert()
     checkEmail(): void {

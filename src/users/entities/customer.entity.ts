@@ -15,9 +15,6 @@ export class Customer extends User {
     @Column('text')
     phone: string;
 
-    @Column('boolean')
-    status: boolean;
-
     @Column('text')
     country: string;
 
