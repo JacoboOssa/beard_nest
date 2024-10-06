@@ -3,8 +3,8 @@ import { Customer } from '../../users/entities/customer.entity';
 
 @Entity()
 export class Order {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column('decimal')
   amount: number;
@@ -14,9 +14,6 @@ export class Order {
 
   @Column('text')
   order_address: string;
-
-  @Column('text')
-  order_email: string;
 
   //Ver si se puede cambiar a un solo campo
   @Column()
