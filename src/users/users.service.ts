@@ -1,5 +1,6 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { Customer } from './entities/customer.entity';
@@ -8,11 +9,12 @@ import { CreateAdminDTO } from './dtos/create-admin.dto';
 import { CreateCustomerDTO } from './dtos/create-customer.dto';
 import { UpdateAdminDTO } from './dtos/update-admin.dto';
 import { UpdateCustomerDTO } from './dtos/update-customer.dto';
+import { LoginAdminDto } from './dtos/login-admin.dto';
 
 @Injectable()
 export class UsersService {
     constructor(@InjectRepository (Customer) private customerRepository: Repository<Customer>,
-    private readonly cartsService: CartsService){}
+    private readonly cartsService: CartsService, private readonly jwtService: JwtService){}
 
     async findAll(){
         return await this.customerRepository.find({where: {status: 'S'}});
@@ -43,6 +45,24 @@ export class UsersService {
             status: 'S',
             roles: ['admin']});
         return await this.customerRepository.save(user);
+    }
+
+    async loginUser(loginAdminDto: LoginAdminDto) {
+        const {email, password} = loginAdminDto;
+        const user = await this.customerRepository.findOne(
+                {where:{email},
+                select: {email: true, id: true, password:true}
+            });
+
+        if (!user){
+            throw new UnauthorizedException('Invalid credentials (email)');
+        }
+        // if (!bcrypt.compareSync(password, user.password)){
+        //     throw new UnauthorizedException('Invalid credentials (password)');
+        // }
+
+
+        return {...user, token: this.jwtService.sign({id: user.id})};
     }
 
     async updateCustomer(id: string, updateCustomerDTO: UpdateCustomerDTO){

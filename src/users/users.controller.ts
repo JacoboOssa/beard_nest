@@ -8,11 +8,17 @@ import { AuthGuard } from '@nestjs/passport';
 import { GetUser } from './decorators/get-user/get-user.decorator';
 import { ValidRoles } from './interfaces/valid-roles';
 import { Auth } from './decorators/auth.decorator';
+import { LoginAdminDto } from './dtos/login-admin.dto';
 
 
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+
+  @Post('login')
+  loginUser(@Body() loginAdminDto: LoginAdminDto) {
+    return this.usersService.loginUser(loginAdminDto);
+  }
 
   @Post('customers')
   async createCustomer(@Body() createCustomerDTO: CreateCustomerDTO) {
@@ -53,15 +59,16 @@ export class UsersController {
   @Get('routeprotected4')
   @Auth(ValidRoles.admin, ValidRoles.write)
   routeProtected4(@Req() req) {
-      console.log(req.user);
-      return 'This route is protected';
+    console.log('Full Request:', req);
+    console.log('User Data:', req.user);
+    return 'This route is protected';
   }
 
 
   @Get('routeprotected3')
   @UseGuards(AuthGuard())
   routeProtected3(@GetUser() user) {
-      console.log(user);
-      return 'This route is protected';
- }
+    console.log(user);
+    return 'This route is protected';
+  }
 }
