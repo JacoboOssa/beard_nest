@@ -28,6 +28,9 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
       autoLoadEntities: true,
       entities: ['dist/**/*.entity{.ts,.js}'],
       synchronize: true,
+      ssl: {
+        rejectUnauthorized: false, // You can set this to true if you have a proper SSL certificate.
+      }
     }),
     ProductsModule, 
     BlogsModule, 

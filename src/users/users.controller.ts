@@ -1,9 +1,14 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateCustomerDTO } from './dtos/create-customer.dto';
 import { CreateAdminDTO } from './dtos/create-admin.dto';
 import { UpdateCustomerDTO } from './dtos/update-customer.dto';
 import { UpdateAdminDTO } from './dtos/update-admin.dto';
+import { AuthGuard } from '@nestjs/passport';
+import { GetUser } from './decorators/get-user/get-user.decorator';
+import { ValidRoles } from './interfaces/valid-roles';
+import { Auth } from './decorators/auth.decorator';
+
 
 @Controller('users')
 export class UsersController {
@@ -44,4 +49,19 @@ export class UsersController {
     return await this.usersService.delete(id);
   }
 
+  // @Get('routeProtectesTest')
+  @Get('routeprotected4')
+  @Auth(ValidRoles.admin, ValidRoles.write)
+  routeProtected4(@Req() req) {
+      console.log(req.user);
+      return 'This route is protected';
+  }
+
+
+  @Get('routeprotected3')
+  @UseGuards(AuthGuard())
+  routeProtected3(@GetUser() user) {
+      console.log(user);
+      return 'This route is protected';
+ }
 }

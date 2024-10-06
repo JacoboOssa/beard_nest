@@ -25,6 +25,7 @@ export class ProductsService {
 
     async create(createProductoDTO: CreateProductDTO) {
         const category = await this.categoriesService.findOne(createProductoDTO.categoryName)
+        // si no existe la categoria, se lanza una excepcion, ahi que
         const product = this.productRepository.create({
             ...createProductoDTO,
             status: 'S',
