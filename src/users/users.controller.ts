@@ -38,6 +38,7 @@ export class UsersController {
     return await this.usersService.createAdmin(createAdminDTO);
   }
 
+  @Auth(ValidRoles.admin)
   @Patch('customers/:id')
   async updateCustomer(@Param('id') id: string, @Body() updateCustomerDTO: UpdateCustomerDTO) {
     return await this.usersService.updateCustomer(id,updateCustomerDTO);
@@ -66,5 +67,6 @@ export class UsersController {
   async delete(@Param('id') id: string) {
     return await this.usersService.delete(id);
   }
+
 
 }

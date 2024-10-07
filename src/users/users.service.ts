@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, InternalServerErrorException, NotFound
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { Customer } from './entities/customer.entity';
 import { CartsService } from 'src/carts/carts.service';
@@ -30,22 +31,37 @@ export class UsersService {
     }
 
     async createCustomer(createCustomerDTO: CreateCustomerDTO){
-        const userCart = await this.cartsService.create()
-        const user = this.customerRepository.create({
-            ...createCustomerDTO,
-            cart: userCart,
-            status: 'S',
-            roles: ['user']});
-        await this.customerRepository.save(user);
-        return user;
+        try {
+            const {password, ...rest} = createCustomerDTO;
+            const userCart = await this.cartsService.create()
+            const user = this.customerRepository.create({
+                ...rest,
+                password: bcrypt.hashSync(password, 10),
+                cart: userCart,
+                status: 'S',
+                roles: ['user']});
+            await this.customerRepository.save(user);
+            return user;
+        }catch(error){
+            this.handleDBExceptions(error);
+        }
     }
 
     async createAdmin(createAdminDTO: CreateAdminDTO){
-        const user = this.customerRepository.create({
-            ...createAdminDTO,
-            status: 'S',
-            roles: ['admin']});
-        return await this.customerRepository.save(user);
+        try{
+            const {password, ...rest} = createAdminDTO;
+            const user = this.customerRepository.create({
+                ...rest,
+                password: bcrypt.hashSync(password, 10),
+                status: 'S',
+                roles: ['admin']});
+            await this.customerRepository.save(user);
+            return user;
+        }
+        catch(error){
+            this.handleDBExceptions(error);
+        }
+         
     }
 
     async loginUser(loginAdminDto: LoginAdminDto) {
@@ -58,9 +74,9 @@ export class UsersService {
         if (!user){
             throw new UnauthorizedException('Invalid credentials (email)');
         }
-        // if (!bcrypt.compareSync(password, user.password)){
-        //     throw new UnauthorizedException('Invalid credentials (password)');
-        // }
+        if (!bcrypt.compareSync(password, user.password)){
+            throw new UnauthorizedException('Invalid credentials (password)');
+        }
 
 
         return {...user, token: this.jwtService.sign({id: user.id})};
