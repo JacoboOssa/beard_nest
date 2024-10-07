@@ -3,9 +3,24 @@ import { ImagesService } from './images.service';
 import { ImagesController } from './images.controller';
 import { Image } from './entities/image.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Image])],
+  imports: [
+    TypeOrmModule.forFeature([Image]),
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      global: true,
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: {expiresIn: configService.get('JWT_EXPIRES_IN')}
+      })
+    }),
+    PassportModule.register({defaultStrategy: 'jwt'})
+  ],
   controllers: [ImagesController],
   providers: [ImagesService],
 })

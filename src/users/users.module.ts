@@ -17,7 +17,6 @@ import { PassportModule } from '@nestjs/passport';
     ConfigModule,
     TypeOrmModule.forFeature([User,Customer,Admin]),
     CartsModule,
-    TypeOrmModule.forFeature([User]), 
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

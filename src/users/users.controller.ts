@@ -20,11 +20,19 @@ export class UsersController {
     return this.usersService.loginUser(loginAdminDto);
   }
 
+  //Log out
+  @Post('logout')
+  @UseGuards(AuthGuard())
+  logout(@Req() req) {
+    return this.usersService.logout(req.user);
+  }
+
   @Post('customers')
   async createCustomer(@Body() createCustomerDTO: CreateCustomerDTO) {
     return await this.usersService.createCustomer(createCustomerDTO);
   }
 
+  @Auth(ValidRoles.admin)
   @Post('admins')
   async createAdmin(@Body() createAdminDTO: CreateAdminDTO) {
     return await this.usersService.createAdmin(createAdminDTO);
@@ -35,40 +43,28 @@ export class UsersController {
     return await this.usersService.updateCustomer(id,updateCustomerDTO);
   }
 
+  @Auth(ValidRoles.admin)
   @Patch('admins/:id')
   async updateAdmin(@Param('id') id: string, @Body() updateAdminDTO: UpdateAdminDTO) {
     return await this.usersService.updateAdmin(id,updateAdminDTO);
   }
 
+  @Auth(ValidRoles.admin)
   @Get()
   async findAll() {
     return await this.usersService.findAll();
   }
 
-  @Get(':id')
+  @Auth(ValidRoles.admin, ValidRoles.user)
+  @Get('user/:id')
   async findOne(@Param('id') id: string) {
     return await this.usersService.findOne(id);
   }
 
+  @Auth(ValidRoles.admin)
   @Delete(':id')
   async delete(@Param('id') id: string) {
     return await this.usersService.delete(id);
   }
 
-  // @Get('routeProtectesTest')
-  @Get('routeprotected4')
-  @Auth(ValidRoles.admin, ValidRoles.write)
-  routeProtected4(@Req() req) {
-    console.log('Full Request:', req);
-    console.log('User Data:', req.user);
-    return 'This route is protected';
-  }
-
-
-  @Get('routeprotected3')
-  @UseGuards(AuthGuard())
-  routeProtected3(@GetUser() user) {
-    console.log(user);
-    return 'This route is protected';
-  }
 }

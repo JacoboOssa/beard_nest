@@ -10,6 +10,7 @@ import { CreateCustomerDTO } from './dtos/create-customer.dto';
 import { UpdateAdminDTO } from './dtos/update-admin.dto';
 import { UpdateCustomerDTO } from './dtos/update-customer.dto';
 import { LoginAdminDto } from './dtos/login-admin.dto';
+import { Request } from 'express';
 
 @Injectable()
 export class UsersService {
@@ -63,6 +64,13 @@ export class UsersService {
 
 
         return {...user, token: this.jwtService.sign({id: user.id})};
+    }
+
+    async logout(req: Request){
+        console.log(req);
+        // const token = req.headers.authorization?.split(' ')[1];
+        // await this.customerRepository.invalidateToken(token);
+        return {message: 'User logged out'};
     }
 
     async updateCustomer(id: string, updateCustomerDTO: UpdateCustomerDTO){

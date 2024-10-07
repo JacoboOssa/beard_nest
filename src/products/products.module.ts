@@ -4,10 +4,26 @@ import { ProductsController } from './products.controller';
 import { Product } from './entities/product.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { CategoriesModule } from 'src/categories/categories.module';
+import { JwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { PassportModule } from '@nestjs/passport';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Product]), CategoriesModule],
+  imports: [
+    TypeOrmModule.forFeature([Product]), 
+    CategoriesModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      global: true,
+      useFactory: (configService: ConfigService) => ({
+        secret: configService.get('JWT_SECRET'),
+        signOptions: {expiresIn: configService.get('JWT_EXPIRES_IN')}
+      })
+    }),
+    PassportModule.register({defaultStrategy: 'jwt'})
+  ],
   controllers: [ProductsController],
   providers: [ProductsService],
   exports: [ProductsService]
