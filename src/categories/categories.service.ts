@@ -4,7 +4,7 @@ import { Repository } from "typeorm";
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import { CreateCategoryDTO } from "./dtos/create-category.dto";
 import { UpdateCategoryDTO } from "./dtos/update-category.dto";
-import { CloudinaryService } from "src/cloudinary/cloudinary.service";
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
 
 @Injectable()
 export class CategoriesService {

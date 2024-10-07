@@ -3,8 +3,8 @@ import { OrdersService } from './orders.service';
 import { CreateOrderDTO } from './dtos/create-order.dto';
 import { UpdateOrderDTO } from './dtos/update-order.dto';
 
-import { Auth } from 'src/users/decorators/auth.decorator';
-import { ValidRoles } from 'src/users/interfaces/valid-roles';
+import { Auth } from '../users/decorators/auth.decorator';
+import { ValidRoles } from '../users/interfaces/valid-roles';
 
 @Controller('orders')
 export class OrdersController {
