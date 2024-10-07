@@ -38,7 +38,7 @@ export class UsersController {
     return await this.usersService.createAdmin(createAdminDTO);
   }
 
-  @Auth(ValidRoles.admin)
+  @Auth(ValidRoles.admin, ValidRoles.user)
   @Patch('customers/:id')
   async updateCustomer(@Param('id') id: string, @Body() updateCustomerDTO: UpdateCustomerDTO) {
     return await this.usersService.updateCustomer(id,updateCustomerDTO);
