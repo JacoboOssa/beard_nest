@@ -6,10 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
+import { CloudinaryModule } from '../cloudinary/cloudinary.module';
+import { ProductsModule } from '../products/products.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Image]),
+    CloudinaryModule,
+    ProductsModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -23,5 +27,6 @@ import { PassportModule } from '@nestjs/passport';
   ],
   controllers: [ImagesController],
   providers: [ImagesService],
+  exports: [ImagesService]
 })
 export class ImagesModule {}
