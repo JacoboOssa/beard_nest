@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable, InternalServerErrorException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { OrderDetails } from './entities/order_detail';
+import { OrderDetails } from './entities/order_detail.entity';
 import { CreateOrderDetailsDTO } from './dtos/create-order-details.dto';
 import { OrdersService } from '../orders/orders.service';
 import { ProductsService } from '../products/products.service';

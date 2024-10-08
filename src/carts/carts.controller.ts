@@ -1,4 +1,4 @@
-import { Controller, Post } from '@nestjs/common';
+import { Controller, Get, Param, Post } from '@nestjs/common';
 import { CartsService } from './carts.service';
 
 import { Auth } from '../users/decorators/auth.decorator';
@@ -13,4 +13,11 @@ export class CartsController {
   create(){
     return this.cartsService.create();
   }
+
+  @Auth(ValidRoles.admin, ValidRoles.user)
+  @Get(':id')
+  findOne(@Param('id') id: string){
+    return this.cartsService.findOne(id);
+  }
+
 }

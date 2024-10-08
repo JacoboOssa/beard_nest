@@ -2,6 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CartItemsController } from './cart_items.controller';
 import { CartItemsService } from './cart_items.service';
 import { CreateCartItemsDTO } from './dtos/create-cart-items.dto';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
+import { PassportModule } from '@nestjs/passport';
 
 describe('CartItemsController', () => {
   let controller: CartItemsController;
@@ -23,8 +26,17 @@ describe('CartItemsController', () => {
       controllers: [CartItemsController],
       providers: [
         { provide: CartItemsService, useValue: mockCartItemsService },
+        JwtService,
       ],
-    }).compile();
+      imports: [
+        PassportModule.register({ defaultStrategy: 'jwt' }),
+      ],
+    })
+    .overrideGuard(AuthGuard('jwt'))
+    .useValue({
+      canActivate: jest.fn(() => true),
+    })
+    .compile();
 
     controller = module.get<CartItemsController>(CartItemsController);
     service = module.get<CartItemsService>(CartItemsService);

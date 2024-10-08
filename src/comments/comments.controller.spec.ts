@@ -2,6 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CommentsController } from './comments.controller';
 import { CommentsService } from './comments.service';
 import { CreateCommentDTO } from './dtos/create-comment.dto';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
+import { PassportModule } from '@nestjs/passport';
 
 describe('CommentsController', () => {
   let controller: CommentsController;
@@ -27,8 +30,17 @@ describe('CommentsController', () => {
       controllers: [CommentsController],
       providers: [
         { provide: CommentsService, useValue: mockCommentsService },
+        JwtService,
       ],
-    }).compile();
+      imports: [
+        PassportModule.register({ defaultStrategy: 'jwt' }),
+      ],
+    })
+    .overrideGuard(AuthGuard('jwt'))
+    .useValue({
+      canActivate: jest.fn(() => true),
+    })
+    .compile();
 
     controller = module.get<CommentsController>(CommentsController);
     service = module.get<CommentsService>(CommentsService);
@@ -64,7 +76,7 @@ describe('CommentsController', () => {
       content: 'Updated Comment', 
       customerId: 'user_1', 
       productId: 'product_1',
-      stars: 5, 
+      stars : 5, 
     };
     expect(await controller.update('1', commentDto)).toEqual({ ...mockComment, content: 'Updated Comment' });
     expect(service.update).toHaveBeenCalledWith('1', commentDto);
