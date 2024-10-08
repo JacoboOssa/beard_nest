@@ -6,9 +6,6 @@ export class CreateCategoryDTO{
     @Length(3,50)
     public readonly name: string;
 
-    @IsNotEmpty()
-    url_image:string;
-
     @IsString()
     @Length(3, 50)
     @IsOptional()
