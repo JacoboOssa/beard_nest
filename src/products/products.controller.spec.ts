@@ -55,7 +55,7 @@ describe('ProductsController', () => {
       description: 'This is a sample product.',
       price: 100,
       stock: 10,
-      categoryName: 'Sample Category',
+      categoryId: '1',
     };
     expect(await controller.create(productDto)).toEqual(mockProduct);
   });
