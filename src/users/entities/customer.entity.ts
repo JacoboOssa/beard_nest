@@ -2,7 +2,7 @@ import { Entity, Column, OneToMany, OneToOne, JoinColumn, ChildEntity } from 'ty
 import { User } from './user.entity';
 import { Order } from '../../orders/entities/order.entity';
 import { Cart } from '../../carts/entities/cart.entity';
-import { Comment } from 'src/comments/entities/comment.entity';
+import { Comment } from '../../comments/entities/comment.entity';
 
 @ChildEntity()
 export class Customer extends User {

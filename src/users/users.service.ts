@@ -5,7 +5,7 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { Customer } from './entities/customer.entity';
-import { CartsService } from 'src/carts/carts.service';
+import { CartsService } from '../carts/carts.service';
 import { CreateAdminDTO } from './dtos/create-admin.dto';
 import { CreateCustomerDTO } from './dtos/create-customer.dto';
 import { UpdateAdminDTO } from './dtos/update-admin.dto';

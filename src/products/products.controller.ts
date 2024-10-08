@@ -3,8 +3,8 @@ import { ProductsService } from './products.service';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { UpdateProductDTO } from './dtos/update-product.dto';
 
-import { Auth } from 'src/users/decorators/auth.decorator';
-import { ValidRoles } from 'src/users/interfaces/valid-roles';
+import { Auth } from '../users/decorators/auth.decorator';
+import { ValidRoles } from '../users/interfaces/valid-roles';
 
 @Controller('products')
 export class ProductsController {

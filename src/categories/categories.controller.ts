@@ -3,9 +3,9 @@ import { CategoriesService } from './categories.service';
 import { CreateCategoryDTO } from './dtos/create-category.dto';
 import { UpdateCategoryDTO } from './dtos/update-category.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
-import { Auth } from 'src/users/decorators/auth.decorator';
-import { ValidRoles } from 'src/users/interfaces/valid-roles';
+import { CloudinaryService } from '../cloudinary/cloudinary.service';
+import { Auth } from '../users/decorators/auth.decorator';
+import { ValidRoles } from '../users/interfaces/valid-roles';
 
   @Controller('categories')
   export class CategoriesController {

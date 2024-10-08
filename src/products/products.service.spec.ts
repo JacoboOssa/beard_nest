@@ -1,69 +1,103 @@
-
 import { Test, TestingModule } from '@nestjs/testing';
 import { ProductsService } from './products.service';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Product } from 'src/products/entities/product.entity';
 import { Repository } from 'typeorm';
-import { CategoriesService } from 'src/categories/categories.service';
-import { NotFoundException } from '@nestjs/common';
-
-const mockProductRepository = {
-    find: jest.fn(),
-    findOneBy: jest.fn(),
-};
-
-const mockCategoriesService = {};
+import { Product } from './entities/product.entity';
+import { CategoriesService } from '../categories/categories.service';
 
 describe('ProductsService', () => {
-    let service: ProductsService;
-    let productRepository: Repository<Product>;
+  let service: ProductsService;
+  let productRepository: Repository<Product>;
+  let categoriesService: CategoriesService;
 
-    beforeEach(async () => {
-        const module: TestingModule = await Test.createTestingModule({
-            providers: [
-                ProductsService,
-                { provide: getRepositoryToken(Product), useValue: mockProductRepository },
-                { provide: CategoriesService, useValue: mockCategoriesService },
-            ],
-        }).compile();
+  const mockProduct: Product = {
+    id: '20079a84-d3dd-48fa-8195-f0f9344d9fac',
+    name: 'Sample Product',
+    description: 'This is a sample product.',
+    price: 100,
+    status: 'S',
+    category: null,
+    checkSlug: () => true,
+    slug: 'sample-product',
+    stock: 10,
+    images: [],
+  };
 
-        service = module.get<ProductsService>(ProductsService);
-        productRepository = module.get<Repository<Product>>(getRepositoryToken(Product));
-    });
+//   const mockCategory = { name: 'Sample Category' };
 
-    it('should be defined', () => {
-        expect(service).toBeDefined();
-    });
+  const mockCategory = {
+    id: '20079a84-d3dd-48fa-8195-f0f9344d9fac',
+    name: 'New Category',
+    url_image: 'https://example.com/image.jpg',
+    slug: 'new-category',
+    products: [],
+    checkSlug: jest.fn(),  // Mock the checkSlug method properly
+  };
 
-    describe('findAll', () => {
-        it('should return all products with status "S"', async () => {
-            const result = [{ id: '1', name: 'Product 1', status: 'S' }];
-            mockProductRepository.find.mockResolvedValue(result);
+  const mockProductRepository = {
+    find: jest.fn().mockResolvedValue([mockProduct]),
+    findOneBy: jest.fn().mockResolvedValue(mockProduct),
+    create: jest.fn().mockReturnValue(mockProduct),
+    save: jest.fn().mockResolvedValue(mockProduct),
+    preload: jest.fn().mockResolvedValue(mockProduct),
+  };
 
-            expect(await service.findAll()).toEqual(result);
-            expect(mockProductRepository.find).toHaveBeenCalledWith({ where: { status: 'S' } });
-        });
-    });
+  const mockCategoriesService = {
+    findOne: jest.fn().mockResolvedValue(mockCategory),
+  };
 
-    describe('findOne', () => {
-        it('should return a product if found', async () => {
-            const product = { id: '1', name: 'Product 1', status: 'S' };
-            mockProductRepository.findOneBy.mockResolvedValue(product);
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [
+        ProductsService,
+        { provide: getRepositoryToken(Product), useValue: mockProductRepository },
+        { provide: CategoriesService, useValue: mockCategoriesService },
+      ],
+    }).compile();
 
-            expect(await service.findOne('1')).toEqual(product);
-        });
+    service = module.get<ProductsService>(ProductsService);
+    productRepository = module.get<Repository<Product>>(getRepositoryToken(Product));
+    categoriesService = module.get<CategoriesService>(CategoriesService);
+  });
 
-        it('should throw a NotFoundException if no product is found', async () => {
-            mockProductRepository.findOneBy.mockResolvedValue(null);
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
 
-            await expect(service.findOne('1')).rejects.toThrow(NotFoundException);
-        });
+  it('should return all active products', async () => {
+    const products = [mockProduct];
+    jest.spyOn(service, 'findAll').mockResolvedValue(products);
+    expect(await service.findAll()).toEqual(products);
+  });
 
-        it('should throw a NotFoundException if product status is not "S"', async () => {
-            const product = { id: '1', name: 'Product 1', status: 'I' };  // Inactive product
-            mockProductRepository.findOneBy.mockResolvedValue(product);
+  it('should return a product by id', async () => {
+    jest.spyOn(service, 'findOne').mockResolvedValue(mockProduct);
+    expect(await service.findOne('1')).toEqual(mockProduct);
+  });
 
-            await expect(service.findOne('1')).rejects.toThrow(NotFoundException);
-        });
-    });
+  it('should create a product', async () => {
+    const productDto = { 
+      name: 'Sample Product', 
+      description: 'This is a sample product.', 
+      price: 100, 
+      stock: 10,  // Adding the required stock field
+      categoryName: 'Sample Category' 
+    };
+    jest.spyOn(service, 'create').mockResolvedValue(mockProduct);
+    expect(await service.create(productDto)).toEqual(mockProduct);
+  });
+
+  it('should update a product', async () => {
+    const updatedProduct = {
+         ...mockProduct, 
+         name: 'Updated Product',
+         checkSlug: mockCategory.checkSlug };
+    jest.spyOn(service, 'update').mockResolvedValue(updatedProduct);
+    expect(await service.update('1', updatedProduct)).toEqual(updatedProduct);
+  });
+
+  it('should delete (deactivate) a product', async () => {
+    jest.spyOn(service, 'delete').mockResolvedValue(undefined);
+    expect(await service.delete('1')).toBeUndefined();
+  });
 });

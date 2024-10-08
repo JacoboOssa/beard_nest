@@ -2,8 +2,8 @@ import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/commo
 import { BlogsService } from './blogs.service';
 import { CreateBlogDTO } from './dtos/create-blog.dto';
 import { UpdateBlogDTO } from './dtos/update-blog.dto';
-import { Auth } from 'src/users/decorators/auth.decorator';
-import { ValidRoles } from 'src/users/interfaces/valid-roles';
+import { Auth } from '../users/decorators/auth.decorator';
+import { ValidRoles } from '../users/interfaces/valid-roles';
 
 @Controller('blogs')
 export class BlogsController {

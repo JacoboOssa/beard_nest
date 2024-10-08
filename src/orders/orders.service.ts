@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Order } from './entities/order.entity';
 import { Repository } from 'typeorm';
 import { CreateOrderDTO } from './dtos/create-order.dto';
-import { UsersService } from 'src/users/users.service';
+import { UsersService } from '../users/users.service';
 import { OrderStatus } from './interfaces/valid-status';
 import { UpdateOrderDTO } from './dtos/update-order.dto';
 

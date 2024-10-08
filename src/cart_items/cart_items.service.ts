@@ -2,10 +2,10 @@ import { BadRequestException, Injectable, InternalServerErrorException, NotFound
 import { InjectRepository } from '@nestjs/typeorm';
 import { CartItem } from './entities/cart_item.entity';
 import { Repository } from 'typeorm';
-import { ProductsService } from 'src/products/products.service';
+import { ProductsService } from '../products/products.service';
 import { CreateCartItemsDTO } from './dtos/create-cart-items.dto';
 import { UpdateCartItemsDTO } from './dtos/update-cart-items.dto';
-import { CartsService } from 'src/carts/carts.service';
+import { CartsService } from '../carts/carts.service';
 
 @Injectable()
 export class CartItemsService {
