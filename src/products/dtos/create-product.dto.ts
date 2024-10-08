@@ -19,7 +19,7 @@ export class CreateProductDTO {
   public readonly stock: number;
 
   @IsNotEmpty()
-  public readonly categoryName: string;
+  public readonly categoryId: string;
 
   @IsString()
   @Length(3,50)
