@@ -22,4 +22,10 @@ export class CloudinaryService {
             streamifier.createReadStream(file.buffer).pipe(uploadStream);
         });
     }
+
+    // Método para subir múltiples archivos a Cloudinary
+    async uploadFiles(files: Express.Multer.File[]): Promise<CloudinaryResponse[]> {
+        const uploadPromises = files.map(file => this.uploadFile(file));  // Crea un array de Promesas para cada archivo
+        return Promise.all(uploadPromises); // Espera a que todas las Promesas se resuelvan
+    }
 }
