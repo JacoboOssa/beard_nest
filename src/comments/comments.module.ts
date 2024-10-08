@@ -3,7 +3,7 @@ import { CommentsService } from './comments.service';
 import { CommentsController } from './comments.controller';
 import { Comment } from './entities/comment.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from 'src/users/users.module';
+import { UsersModule } from '../users/users.module';
 import { ProductsModule } from 'src/products/products.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';

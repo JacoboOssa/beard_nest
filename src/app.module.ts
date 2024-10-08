@@ -14,6 +14,9 @@ import { ImagesModule } from './images/images.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+import { CommonModule } from './common/common.module';
+import { SeedModule } from './seed/seed.module';
+
 
 @Module({
   imports: [
@@ -42,7 +45,7 @@ import { CloudinaryModule } from './cloudinary/cloudinary.module';
     CartsModule, 
     CartItemsModule, 
     UsersModule, 
-    CloudinaryModule],
+    CloudinaryModule, CommonModule, SeedModule],
   controllers: [AppController],
   providers: [AppService],
 })

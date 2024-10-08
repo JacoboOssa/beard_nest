@@ -27,5 +27,6 @@ import { PassportModule } from '@nestjs/passport';
   ],
   controllers: [CartItemsController],
   providers: [CartItemsService],
+  exports: [CartItemsService]
 })
 export class CartItemsModule {}

@@ -1,18 +1,15 @@
 import { Module } from '@nestjs/common';
-import { OrdersService } from './orders.service';
-import { OrdersController } from './orders.controller';
-import { Order } from './entities/order.entity';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersModule } from '../users/users.module';
-
+import { SeedService } from './seed.service';
+import { SeedController } from './seed.controller';
+import { CartItemsModule } from '../cart_items/cart_items.module';
+import { CategoriesModule } from 'src/categories/categories.module';
+import { ProductsModule } from 'src/products/products.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Order]), 
-    UsersModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
@@ -22,10 +19,10 @@ import { PassportModule } from '@nestjs/passport';
         signOptions: {expiresIn: configService.get('JWT_EXPIRES_IN')}
       })
     }),
-    PassportModule.register({defaultStrategy: 'jwt'})
-  ],
-  controllers: [OrdersController],
-  providers: [OrdersService],
-  exports: [OrdersService]
+    PassportModule.register({defaultStrategy: 'jwt'}),
+
+],
+  controllers: [SeedController],
+  providers: [SeedService],
 })
-export class OrdersModule {}
+export class SeedModule {}
