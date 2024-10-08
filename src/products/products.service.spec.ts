@@ -80,8 +80,8 @@ describe('ProductsService', () => {
       name: 'Sample Product', 
       description: 'This is a sample product.', 
       price: 100, 
-      stock: 10,  // Adding the required stock field
-      categoryName: 'Sample Category' 
+      stock: 10, 
+      categoryId: '1' 
     };
     jest.spyOn(service, 'create').mockResolvedValue(mockProduct);
     expect(await service.create(productDto)).toEqual(mockProduct);
