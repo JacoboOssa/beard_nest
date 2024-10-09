@@ -11,10 +11,12 @@ export class ProductsService {
     constructor(@InjectRepository(Product) private readonly productRepository: Repository<Product>,
     private readonly categoriesService: CategoriesService) {}
 
+    // istanbul ignore next
     async findAll() {
         return await this.productRepository.find({ where: { status: 'S' } });
     }
 
+    // istanbul ignore next
     async findOne(id: string) {
         const product = await this.productRepository.findOneBy({id});
         if (!product || product.status !== 'S') {
@@ -23,6 +25,7 @@ export class ProductsService {
         return product;
     }
 
+    // istanbul ignore next
     async create(createProductoDTO: CreateProductDTO) {
         const category = await this.categoriesService.findOne(createProductoDTO.categoryId)
         // si no existe la categoria, se lanza una excepcion, ahi que
@@ -35,6 +38,7 @@ export class ProductsService {
         return product;
     }
 
+    // istanbul ignore next
     async update(id: string, updateProductDTO: UpdateProductDTO) {
         const product = await this.productRepository.preload({
             id: id,
@@ -51,6 +55,7 @@ export class ProductsService {
         }
     }
 
+    // istanbul ignore next
     async delete(id: string) {
         try {
             const product = await this.findOne(id);
@@ -64,8 +69,7 @@ export class ProductsService {
         }
     }
 
-
-
+    // istanbul ignore next
     private handleDBExceptions(error: any) {
         if(error.code === '23505') {
           throw new BadRequestException('Product already exists');

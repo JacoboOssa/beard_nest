@@ -7,8 +7,6 @@ import { CategoriesService } from '../categories/categories.service';
 
 describe('ProductsService', () => {
   let service: ProductsService;
-  let productRepository: Repository<Product>;
-  let categoriesService: CategoriesService;
 
   const mockProduct: Product = {
     id: '20079a84-d3dd-48fa-8195-f0f9344d9fac',
@@ -56,8 +54,6 @@ describe('ProductsService', () => {
     }).compile();
 
     service = module.get<ProductsService>(ProductsService);
-    productRepository = module.get<Repository<Product>>(getRepositoryToken(Product));
-    categoriesService = module.get<CategoriesService>(CategoriesService);
   });
 
   it('should be defined', () => {

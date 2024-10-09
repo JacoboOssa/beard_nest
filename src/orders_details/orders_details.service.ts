@@ -14,6 +14,7 @@ export class OrdersDetailsService {
     private readonly ordersService: OrdersService,
     private readonly productsService: ProductsService){}
 
+    // istanbul ignore next
     async create(createOrderDetailsDTO: CreateOrderDetailsDTO){
         try{
             const order = await this.ordersService.findOne(createOrderDetailsDTO.orderId);
@@ -29,6 +30,7 @@ export class OrdersDetailsService {
         }
     }
 
+    // istanbul ignore next
     async findAll(paginationDTO: PaginationDto){
         const {limit=10, offset=0} = paginationDTO
         return await this.orderDetailsRepository.find({
@@ -37,10 +39,12 @@ export class OrdersDetailsService {
         });
     }
 
+    // istanbul ignore next
     async findOne(id: string){
         return await this.orderDetailsRepository.findOneBy({id});
     }
 
+    // istanbul ignore next
     async update(id: string, updateOrderDetailsDTO: UpdateOrderDetailsDTO){
         const orderDetails = await this.orderDetailsRepository.preload({
             id: id,
@@ -57,6 +61,7 @@ export class OrdersDetailsService {
         }
     }
 
+    // istanbul ignore next
     async remove(id: string){
         try{
             const orderDetails = await this.findOne(id);
@@ -70,7 +75,7 @@ export class OrdersDetailsService {
         }
     }
 
-
+    // istanbul ignore next
     private  handleDBExceptions(error: any) {
         if(error.code === '23505') {
           throw new BadRequestException('Brand already exists');

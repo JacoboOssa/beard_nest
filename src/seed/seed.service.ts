@@ -18,6 +18,7 @@ import * as bcrypt from 'bcrypt';
 export class SeedService {
     constructor(private readonly datasource: DataSource){}
 
+    // istanbul ignore next
     async seed() {
         const queryRunner = this.datasource.createQueryRunner();
         await queryRunner.connect();

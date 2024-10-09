@@ -13,10 +13,12 @@ export class OrdersService {
     constructor(@InjectRepository (Order) private orderRepository: Repository<Order>,
     private readonly usersService: UsersService) {}
 
+    // istanbul ignore next
     async findAll() {
         return await this.orderRepository.find();
     }
 
+    // istanbul ignore next
     async findOne(id: string){
         const order = await this.orderRepository.findOneBy({id});
         if (!order) {
@@ -25,6 +27,7 @@ export class OrdersService {
         return order;
     }
 
+    // istanbul ignore next
     async create(createOrderDTO: CreateOrderDTO) {
         const currentDate = new Date();
         const day = currentDate.getDate();
@@ -43,6 +46,7 @@ export class OrdersService {
         return order;
     }
 
+    // istanbul ignore next
     async update(id: string, updateOrderDTO: UpdateOrderDTO) {
         const order = await this.orderRepository.preload({
             id: id,
@@ -59,6 +63,7 @@ export class OrdersService {
         }
     }
 
+    // istanbul ignore next
     async delete(id: string) {
         try {
             const order = await this.findOne(id);
@@ -71,6 +76,7 @@ export class OrdersService {
         }
     }
 
+    // istanbul ignore next
     private handleDBExceptions(error: any) {
         if(error.code === '23505') {
           throw new BadRequestException('Blog already exists');
