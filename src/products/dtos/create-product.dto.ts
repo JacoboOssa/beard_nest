@@ -12,7 +12,7 @@ export class CreateProductDTO {
 
   @IsNumber({}, { message: 'El precio debe ser un número.' })
   @IsNotEmpty({ message: 'El precio es obligatorio.' })
-  @Min(1, { message: 'El precio debe ser mayor que 0.' }) // Validación para que el precio sea mayor que 0
+  @Min(1, { message: 'El precio debe ser mayor que 0.' })
   public readonly price: number;
 
   @IsInt({ message: 'El stock debe ser un número entero.' })
