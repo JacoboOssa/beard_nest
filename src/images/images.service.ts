@@ -16,14 +16,13 @@ export class ImagesService {
         const images = await this.cloudinaryService.uploadFiles(files);
         const product = await this.productsService.findOne(productId)
         
-        // Guardar cada imagen con el ID del producto en la tabla de imágenes
         const imagesToSave = images.map((res) => {
             return this.imageRepository.create({
-                url_img: res.secure_url,   // URL de la imagen en Cloudinary
-                product: product,  // Relacionar con el producto
+                url_img: res.secure_url,
+                product: product,
             });
         });
-        await this.imageRepository.save(imagesToSave); // Guardar todas las imágenes en la base de datos
+        await this.imageRepository.save(imagesToSave);
         return imagesToSave;
     }
 }

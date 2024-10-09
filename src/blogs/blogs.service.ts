@@ -15,8 +15,8 @@ export class BlogsService {
     }
 
     // istanbul ignore next
-    async findOne(slug: string){
-        const blog = await this.blogRepository.findOneBy({ slug });
+    async findOne(id: string){
+        const blog = await this.blogRepository.findOneBy({id});
         if (!blog || blog.status !== 'S') { 
             throw new NotFoundException('Blog not found or inactive');
         }
