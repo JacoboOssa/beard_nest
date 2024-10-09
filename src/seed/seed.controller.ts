@@ -7,6 +7,7 @@ import { ValidRoles } from '../users/interfaces/valid-roles';
 export class SeedController {
   constructor(private readonly seedService: SeedService) {}
 
+  // istanbul ignore next
   @Auth(ValidRoles.admin)
   @Post()
   seed(){

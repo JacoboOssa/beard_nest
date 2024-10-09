@@ -1,6 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { OrdersController } from './orders.controller';
 import { OrdersService } from './orders.service';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
+import { PassportModule } from '@nestjs/passport';
 
 describe('OrdersController', () => {
   let controller: OrdersController;
@@ -28,8 +31,17 @@ describe('OrdersController', () => {
       controllers: [OrdersController],
       providers: [
         { provide: OrdersService, useValue: mockOrdersService },
+        JwtService,
       ],
-    }).compile();
+      imports: [
+        PassportModule.register({ defaultStrategy: 'jwt' }),
+      ],
+    })
+    .overrideGuard(AuthGuard('jwt'))
+    .useValue({
+      canActivate: jest.fn(() => true),
+    })
+    .compile();
 
     controller = module.get<OrdersController>(OrdersController);
     service = module.get<OrdersService>(OrdersService);

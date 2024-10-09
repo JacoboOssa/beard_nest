@@ -1,8 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { BlogsController } from './blogs.controller';
 import { BlogsService } from './blogs.service';
+import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
-import { APP_GUARD } from '@nestjs/core';
+import { PassportModule } from '@nestjs/passport';
 
 describe('BlogsController', () => {
   let controller: BlogsController;
@@ -29,9 +30,17 @@ describe('BlogsController', () => {
       controllers: [BlogsController],
       providers: [
         { provide: BlogsService, useValue: mockBlogsService },
-        { provide: APP_GUARD, useValue: { canActivate: jest.fn(() => true) } }, // Mock AuthGuard
+        JwtService,
       ],
-    }).compile();
+      imports: [
+        PassportModule.register({ defaultStrategy: 'jwt' }),
+      ],
+    })
+    .overrideGuard(AuthGuard('jwt'))
+    .useValue({
+      canActivate: jest.fn(() => true),
+    })
+    .compile();
 
     controller = module.get<BlogsController>(BlogsController);
     service = module.get<BlogsService>(BlogsService);

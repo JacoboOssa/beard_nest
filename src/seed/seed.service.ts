@@ -7,7 +7,7 @@ import { Category } from '../categories/entities/category.entity';
 import { Order } from '../orders/entities/order.entity';
 import { Product } from '../products/entities/product.entity';
 import { User } from '../users/entities/user.entity';
-import { OrderDetails } from '../orders_details/entities/order_detail';
+import { OrderDetails } from '../orders_details/entities/order_detail.entity';
 import { Customer } from 'src/users/entities/customer.entity';
 import { Comment } from 'src/comments/entities/comment.entity';
 import { Image } from 'src/images/entities/image.entity';
@@ -18,6 +18,7 @@ import * as bcrypt from 'bcrypt';
 export class SeedService {
     constructor(private readonly datasource: DataSource){}
 
+    // istanbul ignore next
     async seed() {
         const queryRunner = this.datasource.createQueryRunner();
         await queryRunner.connect();

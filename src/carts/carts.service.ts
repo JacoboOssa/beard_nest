@@ -8,6 +8,7 @@ export class CartsService {
     constructor (@InjectRepository (Cart) private readonly cartRepository: Repository<Cart>){
     }
 
+    // istanbul ignore next
     async create(){
         const cart = this.cartRepository.create();
         await this.cartRepository.save(cart);

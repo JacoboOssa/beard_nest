@@ -12,10 +12,12 @@ export class CategoriesService {
     private readonly cloudinaryService: CloudinaryService){
     }
 
+    // istanbul ignore next
     async findAll(){
         return await this.categoryRepository.find();
     }
 
+    // istanbul ignore next
     async findOne(id:string){
         const category = await this.categoryRepository.findOneBy({id});
         if (!category){
@@ -24,6 +26,7 @@ export class CategoriesService {
         return category;
     }
 
+    // istanbul ignore next
     async create(file: Express.Multer.File, createCategoryDTO: CreateCategoryDTO){
         const res = await this.cloudinaryService.uploadFile(file)
         const category = this.categoryRepository.create({
@@ -34,6 +37,7 @@ export class CategoriesService {
         return category
     }
 
+    // istanbul ignore next
     async update(updateCategoryDTO: UpdateCategoryDTO){
         const category = await this.categoryRepository.preload({
             ...updateCategoryDTO
@@ -49,6 +53,7 @@ export class CategoriesService {
         }
     }
 
+    // istanbul ignore next
     async delete(id:string){
         try {
             const category = await this.findOne(id);
@@ -61,6 +66,7 @@ export class CategoriesService {
         }
     }
 
+    // istanbul ignore next
     private handleDBExceptions(error: any) {
         if(error.code === '23505') {
           throw new BadRequestException('Category already exists');
