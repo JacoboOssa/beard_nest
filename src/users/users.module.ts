@@ -23,7 +23,7 @@ import { PassportModule } from '@nestjs/passport';
       global: true,
       useFactory: (configService: ConfigService) => ({
         secret: configService.get('JWT_SECRET'),
-        signOptions: {expiresIn: configService.get('JWT_EXPIRES_IN')}
+        signOptions: {expiresIn: configService.get('JWT_EXPIRES_IN') || '60m'}
       })
     }),
     PassportModule.register({defaultStrategy: 'jwt'})
