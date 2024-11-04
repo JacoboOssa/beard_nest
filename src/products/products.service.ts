@@ -36,8 +36,11 @@ export class ProductsService {
     }
 
     async findOneBySlug(slug: string) {
-        const product = await this.productRepository.findOneBy({slug});
-        if (!product || product.status !== 'S') {
+        const product = await this.productRepository.find({
+            where: {slug: slug},
+            relations: ['category']
+        });
+        if (!product) {
             throw new NotFoundException('Product not found or inactive');
         }
         return product;
