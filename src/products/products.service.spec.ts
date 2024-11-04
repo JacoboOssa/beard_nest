@@ -4,6 +4,23 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Product } from './entities/product.entity';
 import { CategoriesService } from '../categories/categories.service';
+
+
+describe('ProductsService', () => {
+  let service: ProductsService;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [ProductsService],
+    }).compile();
+
+    service = module.get<ProductsService>(ProductsService);
+  });
+
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
 /*
 describe('ProductsService', () => {
   let service: ProductsService;
