@@ -33,13 +33,15 @@ export class ProductsController {
     return this.productsService.findAll();
   }
 
+  /*
   @Auth(ValidRoles.admin, ValidRoles.user)
   @Get(':id')
   findOne(@Param('id') id: string ) {
     return this.productsService.findOne(id);
   }
+    */
 
-  @Get('slug/:slug')
+  @Get(':slug')
   findBySlug(@Param('slug') slug: string) {
     return this.productsService.findOneBySlug(slug);
   }
