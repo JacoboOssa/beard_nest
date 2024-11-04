@@ -1,4 +1,4 @@
-import { Controller, FileTypeValidator, MaxFileSizeValidator, Param, ParseFilePipe, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
+import { Controller, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Post, UploadedFiles, UseInterceptors } from '@nestjs/common';
 import { ImagesService } from './images.service';
 import { FileInterceptor, FilesInterceptor } from '@nestjs/platform-express';
 import { Auth } from '../users/decorators/auth.decorator';
@@ -23,4 +23,11 @@ export class ImagesController {
     { 
     return this.imagesService.create(files,id);
   }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.imagesService.findImagesProduct(id);
+  }
 }
+
+
