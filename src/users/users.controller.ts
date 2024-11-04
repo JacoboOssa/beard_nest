@@ -32,7 +32,7 @@ export class UsersController {
     return await this.usersService.createCustomer(createCustomerDTO);
   }
 
-  @Auth(ValidRoles.admin)
+  //@Auth(ValidRoles.admin)
   @Post('admins')
   async createAdmin(@Body() createAdminDTO: CreateAdminDTO) {
     return await this.usersService.createAdmin(createAdminDTO);
