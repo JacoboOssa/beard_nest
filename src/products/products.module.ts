@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { CloudinaryModule } from '../cloudinary/cloudinary.module';
+import { CommonModule } from 'src/common/common.module';
 
 
 @Module({
@@ -15,6 +16,7 @@ import { CloudinaryModule } from '../cloudinary/cloudinary.module';
     TypeOrmModule.forFeature([Product]), 
     CloudinaryModule,
     CategoriesModule,
+    CommonModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

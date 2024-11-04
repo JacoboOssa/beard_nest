@@ -6,6 +6,8 @@ import { CreateProductDTO } from './dtos/create-product.dto';
 import { CategoriesService } from '../categories/categories.service';
 import { UpdateProductDTO } from './dtos/update-product.dto';
 import { CloudinaryService } from "../cloudinary/cloudinary.service";
+import { PaginationDto } from 'src/common/dto/pagination.dto';
+
 
 
 @Injectable()
@@ -16,7 +18,12 @@ export class ProductsService {
 
     // istanbul ignore next
     async findAll() {
-        return await this.productRepository.find({ where: { status: 'S' } });
+        return await this.productRepository.find(
+            {
+                where: {status: 'S'},
+                relations: ['category']
+            }
+        )
     }
 
     // istanbul ignore next
