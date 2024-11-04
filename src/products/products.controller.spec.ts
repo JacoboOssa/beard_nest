@@ -62,15 +62,18 @@ describe('ProductsController', () => {
   });
 
   it('should create a product', async () => {
-    const productDto = {
-      name: 'Sample Product',
-      description: 'This is a sample product.',
-      price: 100,
-      stock: 10,
-      categoryId: '1',
+    const productDto = { 
+        name: 'Sample Product', 
+        description: 'This is a sample product.', 
+        price: 100, 
+        stock: 10, 
+        categoryId: '1' 
     };
-    expect(await controller.create(productDto)).toEqual(mockProduct);
+    const mockFile = {} as Express.Multer.File; // Crea un objeto vacío como un archivo simulado
+
+    expect(await controller.create(mockFile, productDto)).toEqual(mockProduct); // Pasa el archivo y el DTO
   });
+
 
   it('should update a product', async () => {
     const updatedProduct = { ...mockProduct, name: 'Updated Product' };

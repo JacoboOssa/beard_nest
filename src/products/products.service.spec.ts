@@ -19,7 +19,9 @@ describe('ProductsService', () => {
     slug: 'sample-product',
     stock: 10,
     images: [],
-  };
+    main_url_image: 'https://example.com/image.jpg', // Asegúrate de incluir esta propiedad
+    };
+
 
 //   const mockCategory = { name: 'Sample Category' };
 
@@ -73,15 +75,18 @@ describe('ProductsService', () => {
 
   it('should create a product', async () => {
     const productDto = { 
-      name: 'Sample Product', 
-      description: 'This is a sample product.', 
-      price: 100, 
-      stock: 10, 
-      categoryId: '1' 
+        name: 'Sample Product', 
+        description: 'This is a sample product.', 
+        price: 100, 
+        stock: 10, 
+        categoryId: '1' 
     };
+    const mockFile = {} as Express.Multer.File; // Crea un objeto vacío como un archivo simulado
+
     jest.spyOn(service, 'create').mockResolvedValue(mockProduct);
-    expect(await service.create(productDto)).toEqual(mockProduct);
+    expect(await service.create(mockFile, productDto)).toEqual(mockProduct); // Pasa el archivo y el DTO
   });
+
 
   it('should update a product', async () => {
     const updatedProduct = {
