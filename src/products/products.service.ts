@@ -32,7 +32,7 @@ export class ProductsService {
         if (!product || product.status !== 'S') {
             throw new NotFoundException('Product not found or inactive');
         }
-        return product;
+        return product  ;
     }
 
     async findOneBySlug(slug: string) {

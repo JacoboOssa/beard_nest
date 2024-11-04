@@ -29,7 +29,7 @@ export class ImagesService {
     async findImagesProduct(idProduct: string) {
         const imagesProduct = await this.imageRepository.find({
             where: { product: { id: idProduct } }, // Usa la relación 'product' en lugar de 'productId'
-            relations: ['product'], // Asegúrate de cargar la relación 'product' si necesitas acceder a los datos del producto
+            //relations: ['product'], // Asegúrate de cargar la relación 'product' si necesitas acceder a los datos del producto
         });
     
         if (!imagesProduct || imagesProduct.length === 0) {
