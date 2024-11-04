@@ -39,6 +39,11 @@ export class ProductsController {
     return this.productsService.findOne(id);
   }
 
+  @Get('slug/:slug')
+  findBySlug(@Param('slug') slug: string) {
+    return this.productsService.findOneBySlug(slug);
+  }
+
   @Auth(ValidRoles.admin)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateProductDTO: UpdateProductDTO) {

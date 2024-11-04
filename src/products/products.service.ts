@@ -35,6 +35,16 @@ export class ProductsService {
         return product;
     }
 
+    async findOneBySlug(slug: string) {
+        const product = await this.productRepository.findOneBy({slug});
+        if (!product || product.status !== 'S') {
+            throw new NotFoundException('Product not found or inactive');
+        }
+        return product;
+    }
+
+
+
     // istanbul ignore next
     async create(file: Express.Multer.File, createProductoDTO: CreateProductDTO) {
         const res = await this.cloudinaryService.uploadFile(file)
