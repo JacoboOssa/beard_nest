@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Image } from './entities/image.entity';
@@ -25,4 +25,19 @@ export class ImagesService {
         await this.imageRepository.save(imagesToSave);
         return imagesToSave;
     }
+
+    async findImagesProduct(idProduct: string) {
+        const imagesProduct = await this.imageRepository.find({
+            where: { product: { id: idProduct } }, // Usa la relación 'product' en lugar de 'productId'
+            relations: ['product'], // Asegúrate de cargar la relación 'product' si necesitas acceder a los datos del producto
+        });
+    
+        if (!imagesProduct || imagesProduct.length === 0) {
+            throw new NotFoundException('Images for this product not found');
+        }
+    
+        return imagesProduct;
+    }
+    
+    
 }
