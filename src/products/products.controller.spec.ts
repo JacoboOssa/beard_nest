@@ -4,6 +4,23 @@ import { ProductsService } from './products.service';
 import { JwtService } from '@nestjs/jwt';
 import { AuthGuard } from '@nestjs/passport';
 import { PassportModule } from '@nestjs/passport';
+
+describe('AsadoController', () => {
+  let controller: ProductsController;
+
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      controllers: [ProductsController],
+      providers: [ProductsService],
+    }).compile();
+
+    controller = module.get<ProductsController>(ProductsController);
+  });
+
+  it('should be defined', () => {
+    expect(controller).toBeDefined();
+  });
+});
 /*
 describe('ProductsController', () => {
   let controller: ProductsController;

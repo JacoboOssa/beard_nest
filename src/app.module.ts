@@ -16,6 +16,8 @@ import { ConfigModule } from '@nestjs/config';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
+import { AsadoModule } from './asado/asado.module';
+import { AsadoModule } from './asado/asado.module';
 
 
 @Module({
@@ -45,7 +47,7 @@ import { SeedModule } from './seed/seed.module';
     CartsModule, 
     CartItemsModule, 
     UsersModule, 
-    CloudinaryModule, CommonModule, SeedModule],
+    CloudinaryModule, CommonModule, SeedModule, AsadoModule],
   controllers: [AppController],
   providers: [AppService],
 })
