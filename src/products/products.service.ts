@@ -5,11 +5,14 @@ import { Repository } from 'typeorm';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { CategoriesService } from '../categories/categories.service';
 import { UpdateProductDTO } from './dtos/update-product.dto';
+import { CloudinaryService } from "../cloudinary/cloudinary.service";
+
 
 @Injectable()
 export class ProductsService {
     constructor(@InjectRepository(Product) private readonly productRepository: Repository<Product>,
-    private readonly categoriesService: CategoriesService) {}
+    private readonly categoriesService: CategoriesService,
+    private readonly cloudinaryService: CloudinaryService) { }
 
     // istanbul ignore next
     async findAll() {
@@ -26,13 +29,14 @@ export class ProductsService {
     }
 
     // istanbul ignore next
-    async create(createProductoDTO: CreateProductDTO) {
+    async create(file: Express.Multer.File, createProductoDTO: CreateProductDTO) {
+        const res = await this.cloudinaryService.uploadFile(file)
         const category = await this.categoriesService.findOne(createProductoDTO.categoryId)
-        // si no existe la categoria, se lanza una excepcion, ahi que
         const product = this.productRepository.create({
+            main_url_image: res.secure_url,
             ...createProductoDTO,
             status: 'S',
-            category: category
+            category: category,
         });
         await this.productRepository.save(product);
         return product;

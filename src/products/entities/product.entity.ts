@@ -26,6 +26,9 @@ export class Product {
   @Column('text')
   @MaxLength(1)
   status: string;
+  
+  @Column()
+  main_url_image: string;
 
   @ManyToOne(() => Category)
   category: Category;

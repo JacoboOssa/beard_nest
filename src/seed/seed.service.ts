@@ -77,7 +77,7 @@ export class SeedService {
             const blogs = await blogRepository.find();
             await blogRepository.remove(blogs);
 
-
+    
 
             const blog1 = blogRepository.create({
                 title: "La guía definitiva sobre aceites para barba",
@@ -140,6 +140,7 @@ export class SeedService {
                 stock: 10,
                 status: 'S',
                 category: category1,
+                main_url_image: "https://res.cloudinary.com/dapfvvlsy/image/upload/v1727833498/vekvjs53zq89m5ww180e.jpg"
             });
 
             const product2 = productRepository.create({
@@ -149,6 +150,7 @@ export class SeedService {
                 stock: 10,
                 status: 'S',
                 category: category1,
+                main_url_image: "https://res.cloudinary.com/dapfvvlsy/image/upload/v1727833498/vekvjs53zq89m5ww180e.jpg"
             });
 
             const product3 = productRepository.create({
@@ -158,6 +160,7 @@ export class SeedService {
                 stock: 10,
                 status: 'S',
                 category: category2,
+                main_url_image: "https://res.cloudinary.com/dapfvvlsy/image/upload/v1727833498/vekvjs53zq89m5ww180e.jpg"
             });
 
             const product4 = productRepository.create({
@@ -167,6 +170,7 @@ export class SeedService {
                 stock: 10,
                 status: 'S',
                 category: category2,
+                main_url_image: "https://res.cloudinary.com/dapfvvlsy/image/upload/v1727833498/vekvjs53zq89m5ww180e.jpg"
             });
 
             const product5 = productRepository.create({
@@ -176,6 +180,8 @@ export class SeedService {
                 stock: 10,
                 status: 'S',
                 category: category3,
+                main_url_image: "https://res.cloudinary.com/dapfvvlsy/image/upload/v1727833498/vekvjs53zq89m5ww180e.jpg"
+
             });
 
             const product6 = productRepository.create({
@@ -185,6 +191,8 @@ export class SeedService {
                 stock: 10,
                 status: 'S',
                 category: category3,
+                main_url_image: "https://res.cloudinary.com/dapfvvlsy/image/upload/v1727833498/vekvjs53zq89m5ww180e.jpg"
+
             });
 
             const product7 = productRepository.create({
@@ -194,6 +202,8 @@ export class SeedService {
                 stock: 10,
                 status: 'S',
                 category: category4,
+                main_url_image: "https://res.cloudinary.com/dapfvvlsy/image/upload/v1727833498/vekvjs53zq89m5ww180e.jpg"
+
             });
 
             await productRepository.save([product1,product2,product3,product4,product5,product6,product7]);
@@ -637,6 +647,5 @@ export class SeedService {
             await queryRunner.release();
             return 'Seeder complete succesfully'
         }
-
     }
 }

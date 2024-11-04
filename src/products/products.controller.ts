@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, FileTypeValidator, Get, MaxFileSizeValidator, Param, ParseFilePipe, Patch, Post, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDTO } from './dtos/create-product.dto';
 import { UpdateProductDTO } from './dtos/update-product.dto';
 
 import { Auth } from '../users/decorators/auth.decorator';
 import { ValidRoles } from '../users/interfaces/valid-roles';
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('products')
 export class ProductsController {
@@ -12,8 +13,17 @@ export class ProductsController {
 
   @Auth(ValidRoles.admin)
   @Post()
-  create(@Body() createProductDTO: CreateProductDTO) {
-    return this.productsService.create(createProductDTO);
+  @UseInterceptors(FileInterceptor('file'))
+  create(@UploadedFile(
+    new ParseFilePipe({
+      validators:[
+        new MaxFileSizeValidator({maxSize: 1024 * 1024 * 4}),
+        new FileTypeValidator({ fileType: '.(png|jpeg|jpg)'}),
+      ]
+    }),
+  ) file: Express.Multer.File,
+  @Body() createProductDTO: CreateProductDTO) {
+    return this.productsService.create(file,createProductDTO);
   }
 
   @Auth(ValidRoles.admin, ValidRoles.user)
