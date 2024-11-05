@@ -39,17 +39,42 @@ export class UsersService {
     }
 
     async findOneByEmailAndReturnCart(email: string) {
-        const user = await this.customerRepository.findOne({
-            where: { email },
-            relations: ['cart', 'cart.cartItems', 'cart.cartItems.product'], // This joins the cart relation
-        });
+        const user = await this.customerRepository
+        .createQueryBuilder('customer')
+        .leftJoinAndSelect('customer.cart', 'cart')
+        .leftJoinAndSelect('cart.items', 'items') // Use 'items' here
+        .leftJoinAndSelect('items.product', 'product')
+        .where('customer.email = :email', { email })
+        .andWhere('customer.status = :status', { status: 'S' })
+        .getOne();
+
+    if (!user) {
+        throw new NotFoundException('User not found or inactive');
+    }
+
     
         if (!user || user.status !== 'S') {
             throw new NotFoundException('User not found or inactive');
         }
     
         // Return only the cart ID along with user details if needed
-        return user;
+        return {
+            id: user.id,
+            email: user.email,
+            cart: {
+                id: user.cart?.id,
+                items: user.cart?.items.map(item => ({
+                    id: item.id,
+                    quantity: item.quantity,
+                    total: item.total,
+                    product: {
+                        id: item.product.id,
+                        name: item.product.name,
+                        price: item.product.price,
+                    },
+                })) || [], // Return an empty array if no items
+            },
+        };
     }
 
 
