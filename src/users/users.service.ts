@@ -30,6 +30,14 @@ export class UsersService {
         return user;
     }
 
+    async findOneByEmail(email: string){
+        const user = await this.customerRepository.findOneBy({email});
+        if (!user || user.status !== 'S'){
+            throw new NotFoundException('User not found or inactive');
+        }
+        return user;
+    }
+
     async createCustomer(createCustomerDTO: CreateCustomerDTO){
         try {
             const {password, ...rest} = createCustomerDTO;
