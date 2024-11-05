@@ -63,7 +63,7 @@ export class UsersController {
   }
 
   @Auth(ValidRoles.admin, ValidRoles.user)
-  @Get('user/:email')
+  @Get('user/email/:email')
   async findOneByEmail(@Param('email') email: string) {
     return await this.usersService.findOneByEmail(email);
   }
