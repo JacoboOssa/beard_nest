@@ -41,7 +41,7 @@ export class UsersService {
     async findOneByEmailAndReturnCart(email: string) {
         const user = await this.customerRepository.findOne({
             where: { email },
-            relations: ['cart'], // This joins the cart relation
+            relations: ['cart', 'cart.cartItems', 'cart.cartItems.product'], // This joins the cart relation
         });
     
         if (!user || user.status !== 'S') {
