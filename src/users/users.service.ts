@@ -38,6 +38,25 @@ export class UsersService {
         return user;
     }
 
+    async findOneByEmailAndReturnCart(email: string) {
+        const user = await this.customerRepository.findOne({
+            where: { email },
+            relations: ['cart'], // This joins the cart relation
+        });
+    
+        if (!user || user.status !== 'S') {
+            throw new NotFoundException('User not found or inactive');
+        }
+    
+        // Return only the cart ID along with user details if needed
+        return {
+            id: user.id,
+            email: user.email,
+            cartId: user.cart?.id, // cart may be null if not assigned
+        };
+    }
+
+
     async createCustomer(createCustomerDTO: CreateCustomerDTO){
         try {
             const {password, ...rest} = createCustomerDTO;
