@@ -71,6 +71,7 @@ export class UsersService {
                         id: item.product.id,
                         name: item.product.name,
                         price: item.product.price,
+                        main_url_image: item.product.main_url_image
                     },
                 })) || [], // Return an empty array if no items
             },
