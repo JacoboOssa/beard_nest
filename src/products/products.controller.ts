@@ -27,10 +27,17 @@ export class ProductsController {
     return this.productsService.create(file,createProductDTO);
   }
 
-  @Auth(ValidRoles.admin, ValidRoles.user)
+  //@Auth(ValidRoles.admin, ValidRoles.user)
   @Get()
-  findAll() {
-    return this.productsService.findAll();
+  async findAll(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 3,
+  ) {
+    const [results,total]= await this.productsService.findAll(limit, (page - 1) * limit);
+    return { 
+      data: results,
+      total
+     };
   }
 
   /*

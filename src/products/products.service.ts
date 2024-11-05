@@ -17,13 +17,15 @@ export class ProductsService {
     private readonly cloudinaryService: CloudinaryService) { }
 
     // istanbul ignore next
-    async findAll() {
-        return await this.productRepository.find(
+    async findAll(limit: number, offset: number) {
+        const [results,total]= await this.productRepository.findAndCount(
             {
                 where: {status: 'S'},
-                relations: ['category']
+                take: limit,
+                skip: offset,
             }
         )
+        return [results,total];
     }
 
     // istanbul ignore next
