@@ -49,11 +49,7 @@ export class UsersService {
         }
     
         // Return only the cart ID along with user details if needed
-        return {
-            id: user.id,
-            email: user.email,
-            cartId: user.cart?.id, // cart may be null if not assigned
-        };
+        return user;
     }
 
 
