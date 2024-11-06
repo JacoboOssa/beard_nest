@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
 import { CartItemsService } from './cart_items.service';
 import { CreateCartItemsDTO } from './dtos/create-cart-items.dto';
 import { Auth } from '../users/decorators/auth.decorator';
@@ -13,7 +13,4 @@ export class CartItemsController {
   create(@Body() createCartItemDTO: CreateCartItemsDTO) {
     return this.cartItemsService.create(createCartItemDTO);
   }
-
-  //Crear Update 
-  //Crear Get
 }
