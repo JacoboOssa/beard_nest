@@ -79,6 +79,27 @@ export class UsersService {
     }
 
 
+    async findOneByEmailAndReturnOrder(email: string) {
+        const user = await this.customerRepository
+        .createQueryBuilder('customer')
+        .leftJoinAndSelect('customer.orders', 'orders')
+        .where('customer.email = :email', { email })
+        .andWhere('customer.status = :status', { status: 'S' })
+        .getOne();
+
+    if (!user) {
+        throw new NotFoundException('User not found or inactive');
+    }
+
+    
+        if (!user || user.status !== 'S') {
+            throw new NotFoundException('User not found or inactive');
+        }
+    
+        // Return only the cart ID along with user details if needed
+        return user;
+    }
+
     async createCustomer(createCustomerDTO: CreateCustomerDTO){
         try {
             const {password, ...rest} = createCustomerDTO;

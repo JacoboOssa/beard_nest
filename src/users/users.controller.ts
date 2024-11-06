@@ -74,6 +74,12 @@ export class UsersController {
     return await this.usersService.findOneByEmailAndReturnCart(email);
   }
 
+  @Auth(ValidRoles.admin, ValidRoles.user)
+  @Get('order/email/:email')
+  async findOneByEmailAndReturnOrder(@Param('email') email: string) {
+    return await this.usersService.findOneByEmailAndReturnOrder(email);
+  }
+
   @Auth(ValidRoles.admin)
   @Delete(':id')
   async delete(@Param('id') id: string) {
