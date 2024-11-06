@@ -14,7 +14,7 @@ export class ProductsController {
 
   @Auth(ValidRoles.admin)
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
+  @UseInterceptors(FileInterceptor('image'))
   create(@UploadedFile(
     new ParseFilePipe({
       validators:[
