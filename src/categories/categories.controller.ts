@@ -55,13 +55,11 @@ import { ValidRoles } from '../users/interfaces/valid-roles';
       return this.categoriesService.delete(id);
     }
 
-    @Auth(ValidRoles.admin, ValidRoles.user)
     @Get()
     findAll(){
       return this.categoriesService.findAll();
     }
 
-    @Auth(ValidRoles.admin, ValidRoles.user)
     @Get(':slug')
     findOne(@Param('slug') slug: string){
       return this.categoriesService.findOne(slug);
