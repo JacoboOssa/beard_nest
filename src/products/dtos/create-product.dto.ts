@@ -28,5 +28,5 @@ export class CreateProductDTO {
   @IsOptional()
   public readonly slug?: string;
   @IsOptional()
-  public readonly file?: Express.Multer.File;
+  public readonly image?: Express.Multer.File;
 }
