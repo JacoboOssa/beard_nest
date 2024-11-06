@@ -41,7 +41,6 @@ export class ProductsController {
   }
 
   
-  @Auth(ValidRoles.admin, ValidRoles.user)
   @Get('id/:id')
   findOne(@Param('id') id: string ) {
     return this.productsService.findOne(id);
