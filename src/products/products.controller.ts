@@ -65,4 +65,10 @@ export class ProductsController {
     return this.productsService.delete(id);
   }
 
+  @Auth(ValidRoles.admin)
+  @Delete('slug/:slug')
+  deleteBySlug(@Param('slug') slug: string) {
+    return this.productsService.deleteBySlug(slug);
+  }
+
 }

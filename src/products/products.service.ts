@@ -92,6 +92,19 @@ export class ProductsService {
         }
     }
 
+    async deleteBySlug(slug: string) {
+        try {
+            const product = await this.findOneBySlug(slug);
+            if (!product) {
+                throw new NotFoundException('Product not found');
+            }
+            product.status = 'N';
+            await this.productRepository.save(product);
+        } catch (error) {
+            this.handleDBExceptions(error);
+        }
+    }
+
     // istanbul ignore next
     private handleDBExceptions(error: any) {
         if(error.code === '23505') {
