@@ -40,13 +40,11 @@ export class ProductsController {
      };
   }
 
-  /*
-  @Auth(ValidRoles.admin, ValidRoles.user)
-  @Get(':id')
+  
+  @Get('id/:id')
   findOne(@Param('id') id: string ) {
     return this.productsService.findOne(id);
   }
-    */
 
   @Get(':slug')
   findBySlug(@Param('slug') slug: string) {

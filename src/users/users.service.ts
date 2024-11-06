@@ -138,7 +138,7 @@ export class UsersService {
         const {email, password} = loginAdminDto;
         const user = await this.customerRepository.findOne(
                 {where:{email},
-                select: {email: true, id: true, password:true}
+                select: {email: true, id: true, password:true, roles: true}
             });
 
         if (!user){
@@ -149,7 +149,7 @@ export class UsersService {
         }
 
 
-        return {...user, token: this.jwtService.sign({id: user.id})};
+        return {...user, token: this.jwtService.sign({id: user.id, })};
     }
 
     async logout(req: Request){
