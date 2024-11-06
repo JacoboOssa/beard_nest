@@ -23,6 +23,7 @@ export class ProductsService {
                 where: {status: 'S'},
                 take: limit,
                 skip: offset,
+                relations: ['images', 'category'],
             }
         )
         return [results,total];
