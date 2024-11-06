@@ -27,4 +27,6 @@ export class CreateProductDTO {
   @Length(3, 50, { message: 'El slug debe tener entre 3 y 50 caracteres.' })
   @IsOptional()
   public readonly slug?: string;
+  @IsOptional()
+  public readonly image?: Express.Multer.File;
 }
