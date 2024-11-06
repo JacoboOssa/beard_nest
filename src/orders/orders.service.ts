@@ -33,7 +33,7 @@ export class OrdersService {
         const day = currentDate.getDate();
         const month = currentDate.getMonth() + 1;
         const year = currentDate.getFullYear();
-        const customer= await this.usersService.findOne(createOrderDTO.customer_id)
+        const customer= await this.usersService.findOneByEmail(createOrderDTO.customer_email)
         const order = this.orderRepository.create({
             ...createOrderDTO,
             customer: customer,

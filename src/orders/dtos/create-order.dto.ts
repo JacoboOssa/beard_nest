@@ -14,8 +14,8 @@ export class CreateOrderDTO {
     @Min(0, { message: 'El monto debe ser al menos 0.' })
     amount: number;
 
-    @IsUUID('all', { message: 'El customer_id debe ser un UUID válido.' })
+    // @IsUUID('all', { message: 'El customer_id debe ser un UUID válido.' })
     @IsString({ message: 'El customer_id debe ser una cadena de texto.' })
     @IsNotEmpty({ message: 'El customer_id es obligatorio.' })
-    customer_id: string;
+    customer_email: string;
 }
